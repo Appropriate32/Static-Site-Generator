@@ -1,5 +1,8 @@
 package com.ssg;
 
+import com.ssg.parser.DocumentBuilder;
+import com.ssg.parser.MarkdownParser;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -40,13 +43,13 @@ public class App extends Application {
         VBox leftBox = new VBox(10);
         leftBox.setPadding(new Insets(0, 10, 0, 20));
         Label mdLabel = new Label("MARKDOWN");
-        mdLabel.setStyle("-fx-text-fill: #e06c75; -fx-font-weight: bold; -fx-font-size: 11px;");
+        mdLabel.setStyle("-fx-text-fill: #e06c75; -fx-font-weight: bold; -fx-font-size: 24px;");
 
         TextArea markdownInput = new TextArea();
         markdownInput.setPromptText("# Type Markdown here...");
-        // Use a monospaced font for that "code" feel
+
         markdownInput.setStyle(
-                "-fx-control-inner-background: #21252b; -fx-text-fill: #abb2bf; -fx-font-family: 'Consolas', 'Courier New', monospace; -fx-border-color: #3e4451; -fx-border-radius: 5; -fx-background-radius: 5;");
+                "-fx-control-inner-background: #21252b; -fx-text-fill: #abb2bf; -fx-font-family: 'Consolas', 'Courier New', monospace; -fx-font-size: 15px; -fx-border-color: #3e4451; -fx-border-radius: 5; -fx-background-radius: 5;");
         VBox.setVgrow(markdownInput, javafx.scene.layout.Priority.ALWAYS);
         leftBox.getChildren().addAll(mdLabel, markdownInput);
 
@@ -54,12 +57,12 @@ public class App extends Application {
         VBox rightBox = new VBox(10);
         rightBox.setPadding(new Insets(0, 20, 0, 10));
         Label htmlLabel = new Label("HTML OUTPUT");
-        htmlLabel.setStyle("-fx-text-fill: #98c379; -fx-font-weight: bold; -fx-font-size: 11px;");
+        htmlLabel.setStyle("-fx-text-fill: #98c379; -fx-font-weight: bold; -fx-font-size: 24px;");
 
         TextArea htmlOutput = new TextArea();
         htmlOutput.setEditable(false);
         htmlOutput.setStyle(
-                "-fx-control-inner-background: #21252b; -fx-text-fill: #d19a66; -fx-font-family: 'Consolas', 'Courier New', monospace; -fx-border-color: #3e4451; -fx-border-radius: 5; -fx-background-radius: 5;");
+                "-fx-control-inner-background: #21252b; -fx-text-fill: #d19a66; -fx-font-family: 'Consolas', 'Courier New', monospace; -fx-font-size: 15px; -fx-border-color: #3e4451; -fx-border-radius: 5; -fx-background-radius: 5;");
         VBox.setVgrow(htmlOutput, javafx.scene.layout.Priority.ALWAYS);
         rightBox.getChildren().addAll(htmlLabel, htmlOutput);
 
@@ -85,7 +88,10 @@ public class App extends Application {
 
         // 5. Button Logic
         generateBtn.setOnAction(event -> {
-            htmlOutput.setText("\n<h1>Sample Output</h1>\n<p>Your engine is ready.</p>");
+            String rawText = markdownInput.getText();
+            String fragments = MarkdownParser.parse(rawText);
+            String finalWebpage = DocumentBuilder.htmlWrapper(fragments, "My SSG Project");
+            htmlOutput.setText(finalWebpage);
         });
 
         // 6. Scene Setup
