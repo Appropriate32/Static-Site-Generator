@@ -6,12 +6,18 @@ public class MarkdownParser {
     public static String parse(String rawMarkdown) { // Takes a raw markdown string
         ArrayList<HTMLNode> documentNodes = new ArrayList<>();
         String[] lines = rawMarkdown.split("\\R");
+
         for (String line : lines) {
             String cleanLine = line.trim();
             if (cleanLine.isEmpty()) {
                 continue;
             }
-            if (cleanLine.startsWith("#")) {
+
+            if (cleanLine.startsWith("> ")) {
+                documentNodes.add(new BlockQuoteNode(cleanLine.substring(2).trim()));
+            } else if (cleanLine.startsWith("- ") || cleanLine.startsWith("* ")) {
+                documentNodes.add(new ListItemNode(cleanLine.substring(2).trim()));
+            } else if (cleanLine.startsWith("#")) {
                 int hashCount = 0;
                 for (int i = 0; i < cleanLine.length(); i++) {
                     char current = cleanLine.charAt(i);
@@ -29,7 +35,7 @@ public class MarkdownParser {
                 }
 
             } else {
-                documentNodes.add(new ParagraphNode(cleanLine.trim()));
+                documentNodes.add(new ParagraphNode(cleanLine));
             }
 
         }
