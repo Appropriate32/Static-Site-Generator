@@ -127,7 +127,11 @@ public class App extends Application {
                 if (success) {
                     System.out.println("Webpage exported successfully to: " + finalPath);
                 }
+
+                String directory = fileToSave.getParent();
+                FileManager.saveHtmlFile(FileManager.DEFAULT_CSS, directory + File.separator + "style.css");
             }
+
         });
 
         // 6. Scene Setup
