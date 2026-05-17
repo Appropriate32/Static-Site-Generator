@@ -6,20 +6,13 @@ import java.io.File;
 public class MainTest {
     public static void main(String[] args) {
 
-        String testMarkdown = "# Welcome to the Java SSG\n" +
-                "\n" +
-                "This is a standard paragraph. The parser should ignore the blank line above this.\n" +
-                "\n" +
-                "## Subheadings Work Too\n" +
-                "Another paragraph here to test sequential lines.\n" +
-                "\n" +
-                "###### Deepest Heading Level\n" +
-                "####### This has 7 hashes, so it should be a paragraph!\n" +
-                "  This line has leading spaces, which should be trimmed by your cleanLine logic.  ";
+        String testMarkdown = FileManager.readMarkdownFile(
+                "/home/eissa/uni-repos/OOP-2nd-Semester/OOP-Lab-Project/static-site-generator/test.md");
 
-        String generatedHtml = MarkdownParser.parse(testMarkdown);
+        String fragments = MarkdownParser.parse(testMarkdown);
 
-        String wrappedHtml = DocumentBuilder.htmlWrapper(generatedHtml, "Test Site");
-        System.out.println(wrappedHtml);
+        String wrappedHtml = DocumentBuilder.htmlWrapper(fragments, "Test Site");
+        FileManager.saveHtmlFile(wrappedHtml,
+                "/mnt/c/Users/DELL/Downloads/index.html");
     }
 }
