@@ -78,17 +78,26 @@ public class App extends Application {
         Button generateBtn = new Button("GENERATE HTML");
         Button exportBtn = new Button("EXPORT .HTML");
 
-        // A quick helper string for styling so we don't copy-paste it three times
+        // A quick helper string for styling
         String btnStyle = "-fx-background-color: #61afef; -fx-text-fill: #282c34; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;";
         loadBtn.setStyle(btnStyle);
         generateBtn.setStyle(btnStyle);
         exportBtn.setStyle(btnStyle);
 
+        applyButtonHover(loadBtn, btnStyle);
+        applyButtonHover(generateBtn, btnStyle);
+        applyButtonHover(exportBtn, btnStyle);
+
         // HBox with a 20px gap between buttons
         HBox footer = new HBox(20, loadBtn, generateBtn, exportBtn);
         footer.setAlignment(Pos.CENTER);
         footer.setPadding(new Insets(20));
-        root.setBottom(footer);
+        Label statusLabel = new Label("System Status: Awaiting Markdown file...");
+        statusLabel.setStyle("-fx-text-fill: #98c379; -fx-font-style: italic; -fx-padding: 0 0 10 0;");
+
+        VBox bottomArea = new VBox(10, footer, statusLabel);
+        bottomArea.setAlignment(Pos.CENTER);
+        root.setBottom(bottomArea);
 
         loadBtn.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -100,6 +109,7 @@ public class App extends Application {
             if (selectedFile != null) {
                 String fileContent = FileManager.readMarkdownFile(selectedFile.getAbsolutePath());
                 markdownInput.setText(fileContent);
+                statusLabel.setText("System Status: Loaded file successfully.");
             }
         });
 
@@ -108,6 +118,7 @@ public class App extends Application {
             String fragments = MarkdownParser.parse(rawText);
             String finalWebpage = DocumentBuilder.htmlWrapper(fragments, "My SSG Project");
             htmlOutput.setText(finalWebpage);
+            statusLabel.setText("System Status: HTML Generated!");
         });
 
         exportBtn.setOnAction(event -> {
@@ -125,7 +136,7 @@ public class App extends Application {
                 }
                 boolean success = FileManager.saveHtmlFile(htmlOutput.getText(), finalPath);
                 if (success) {
-                    System.out.println("Webpage exported successfully to: " + finalPath);
+                    statusLabel.setText("System Status: Exported to " + fileToSave.getName());
                 }
 
                 String directory = fileToSave.getParent();
@@ -139,6 +150,14 @@ public class App extends Application {
         stage.setTitle("Java-Based SSG Utility");
         stage.setScene(scene);
         stage.show();
+    }
+
+    // Helper method for hover effects
+    private void applyButtonHover(Button btn, String normalStyle) {
+        String hoverStyle = "-fx-background-color: #528bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;";
+
+        btn.setOnMouseEntered(e -> btn.setStyle(hoverStyle));
+        btn.setOnMouseExited(e -> btn.setStyle(normalStyle));
     }
 
     public static void main(String[] args) {

@@ -7,7 +7,7 @@ public class MarkdownParser {
         ArrayList<HTMLNode> documentNodes = new ArrayList<>();
         String[] lines = rawMarkdown.split("\\R");
 
-        for (String line : lines) {
+        for (String line : lines) { // Polymorphic generation of nodes based on Markdown syntax
             String cleanLine = line.trim();
             if (cleanLine.isEmpty()) {
                 continue;

@@ -1,5 +1,6 @@
 package com.ssg.parser;
 
+// Base abstract class for all Markdown elements
 public abstract class HTMLNode {
     private String content;
 

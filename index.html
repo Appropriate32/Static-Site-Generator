@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My SSG Project</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>SSG Engine: Final Evaluation</h1>
+<p>Welcome to the Java Static Site Generator. This document demonstrates the full capabilities of the parsing engine.</p>
+<h2>Object-Oriented Architecture</h2>
+<p>The backend utilizes inheritance and polymorphism to dynamically generate HTML tags from raw text strings.</p>
+<h3>Supported Elements</h3>
+<p>Instead of hardcoding, the parser dynamically instantiates specific Node objects:</p>
+<ul>
+ <li>HeadingNode (H1 - H6)</li>
+</ul>
+<ul>
+ <li>ParagraphNode</li>
+</ul>
+<ul>
+ <li>BlockQuoteNode</li>
+</ul>
+<ul>
+ <li>ListItemNode</li>
+</ul>
+<h2>System Demonstration</h2>
+<blockquote>"Good design is adding value faster than it adds cost."</blockquote>
+<blockquote>The parser automatically detects this blockquote syntax, strips the markdown characters, and wraps it in a styled HTML blockquote tag.</blockquote>
+<p>If this file successfully renders in the JavaFX preview and exports with the attached CSS stylesheet, the Sprint 5 pipeline is fully operational.</p>
+
+</body>
+</html>
