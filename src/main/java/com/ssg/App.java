@@ -23,11 +23,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        // 1. Root Layout & Overall Styling
-        BorderPane root = new BorderPane();
-        root.setStyle("-fx-background-color: #282c34;"); // Dark background color (One Dark theme)
 
-        // 2. Header Area
+        BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-color: #282c34;"); // Dark background color
+
         Label titleLabel = new Label("Markdown SSG Engine");
         titleLabel.setStyle(
                 "-fx-text-fill: #abb2bf; -fx-font-size: 18px; -fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; -fx-font-weight: bold;");
@@ -37,8 +36,7 @@ public class App extends Application {
         header.setAlignment(Pos.CENTER_LEFT);
         root.setTop(header);
 
-        // 3. The Interactive Center (SplitPane)
-        //
+        // The center
         SplitPane splitPane = new SplitPane();
         splitPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
 
@@ -73,7 +71,7 @@ public class App extends Application {
         splitPane.setDividerPositions(0.5); // Start with a 50/50 split
         root.setCenter(splitPane);
 
-        // 4. Footer Area (Action Bar)
+        // Footer Area (Action Bar)
         Button loadBtn = new Button("LOAD .MD");
         Button generateBtn = new Button("GENERATE HTML");
         Button exportBtn = new Button("EXPORT .HTML");
@@ -145,7 +143,7 @@ public class App extends Application {
 
         });
 
-        // 6. Scene Setup
+        // Scene Setup
         Scene scene = new Scene(root, 900, 600);
         stage.setTitle("Java-Based SSG Utility");
         stage.setScene(scene);
